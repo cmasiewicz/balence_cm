@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35931.197 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "scales", "scales\scales.vcxproj", "{00DE8B15-3784-467D-913C-670C213AF165}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{00DE8B15-3784-467D-913C-670C213AF165}.Debug|x64.ActiveCfg = Debug|x64
+		{00DE8B15-3784-467D-913C-670C213AF165}.Debug|x64.Build.0 = Debug|x64
+		{00DE8B15-3784-467D-913C-670C213AF165}.Debug|x86.ActiveCfg = Debug|Win32
+		{00DE8B15-3784-467D-913C-670C213AF165}.Debug|x86.Build.0 = Debug|Win32
+		{00DE8B15-3784-467D-913C-670C213AF165}.Release|x64.ActiveCfg = Release|x64
+		{00DE8B15-3784-467D-913C-670C213AF165}.Release|x64.Build.0 = Release|x64
+		{00DE8B15-3784-467D-913C-670C213AF165}.Release|x86.ActiveCfg = Release|Win32
+		{00DE8B15-3784-467D-913C-670C213AF165}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4A06E744-0F99-4665-A4F0-2F46E51A8533}
+	EndGlobalSection
+EndGlobal
