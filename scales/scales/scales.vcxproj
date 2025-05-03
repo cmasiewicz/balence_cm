@@ -130,6 +130,7 @@
     <ClCompile Include="BalenceScales.cpp" />
     <ClCompile Include="HandleInput.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Scale..cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BalenceScales.h" />

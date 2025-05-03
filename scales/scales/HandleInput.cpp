@@ -8,19 +8,12 @@ using namespace std;
 
 void  HandleInput::handleInput()
 {
-    while (1)
+    while (!cin.eof())
     {
         string line;
 
-        getline(std::cin, line);
-        if (!std::cin)
-        {
-            if (!std::cin.eof())
-            {
-                cerr << "cin failure: cannot build scale tree" << endl;
-                abort();
-            }
-        }
+        getline(cin, line);
+
         if (line.size() && line[0] == '#')
         {
             // ignore comment
@@ -36,50 +29,52 @@ void  HandleInput::handleInput()
             }
             else
             {
-                Scale node;
-                
+                ScalePtr node = make_shared<Scale>();
+               
+
                 string scaleName = vec[0];
-                node.name = scaleName;
+                node->name = scaleName;
 
                 string left = vec[1];
-                
+
                 if (isdigit(left[0]))
                 {
                     // it is a weight
-                    node.leftPanWeight = stoi(left);
+                    node->leftPan.setMass(stoi(left));
                 }
                 else
                 {
                     // it is a scale
-                    node.leftPanScaleName = left;
+                    node->leftPan.aboveScaleName = left;
                 }
                 string right = vec[2];
                 if (isdigit(right[0]))
                 {
                     // it is a weight
-                    node.rightPanWeight = stoi(right);
+                    node->rightPan.setMass(stoi(right));
                 }
                 else
                 {
                     // it is a scale
-                    node.rightPanScaleName = right;
+                    node->rightPan.aboveScaleName = right;
                 }
 
-                if (node.leftPanScaleName.empty() && node.rightPanScaleName.empty())
+                if (node->leftPan.aboveScaleName.empty() && node->rightPan.aboveScaleName.empty())
                 {
                     // balence it now
-                    if (node.leftPanWeight > node.rightPanWeight)
+                    if (node->leftPan.getTotalMass() > node->rightPan.getTotalMass())
                     {
-                        node.addRight = node.leftPanWeight - node.rightPanWeight;
+                        node->rightPan.addMass(node->leftPan.getTotalMass() - node->rightPan.getTotalMass());
                     }
-                    else if (node.rightPanWeight > node.leftPanWeight)
+                    else if (node->rightPan.getTotalMass() > node->leftPan.getTotalMass())
                     {
-                        node.addLeft = node.rightPanWeight - node.leftPanWeight;
+                        node->leftPan.addMass(node->rightPan.getTotalMass() - node->leftPan.getTotalMass());
                     }
-                    node.isBalenced = true;
+
                 }
-                _scales[node.name] = node;
-                _order.push_back(node.name);
+
+                _scales[node->name] = node;
+                _order.push_back(node->name);
             }
         }
     }
@@ -102,7 +97,7 @@ vector<string> HandleInput::getOrder()
     return  _order;
 }
 
-std::unordered_map<std::string, Scale> HandleInput::getScales()
+std::unordered_map<std::string, ScalePtr> HandleInput::getScales()
 {
     return _scales;
 }

@@ -2,27 +2,44 @@
 #define SCALE_H
 
 #include <string>
+#include <memory>
 
-struct Scale
+class Pan
 {
-    std::string name;
-    unsigned rightPanWeight = 0;
-    unsigned rightAbovePanWeight = 0;
-    unsigned addRight = 0;
-    std::string rightPanScaleName;
-
-    unsigned leftPanWeight = 0;
-    unsigned addLeft = 0;
-    std::string leftPanScaleName;
-    unsigned leftAbovePanWeight = 0; 
-    bool isBalenced = false;
-    unsigned scaleWeight = 1;
-    unsigned GetTotalWeight() const
-    {
-        return scaleWeight + rightPanWeight + addRight + rightAbovePanWeight 
-            + leftPanWeight + addLeft + leftAbovePanWeight;
-
-    }
-
+public:
+    void setName(std::string name);
+    unsigned getTotalMass();
+    void addMass(unsigned toAdd);
+    std::string aboveScaleName;
+    void setMass(unsigned toSet);
+    unsigned getMass();
+    unsigned getAddedMass();
+    unsigned getAboveMass();
+    void addAboveMass(unsigned above);
+   
+private:
+    std::string _name;
+    unsigned _mass = 0;
+    unsigned _aboveMass = 0;
+    unsigned _addedMass = 0;
+    unsigned _totalMass = 0;
 };
+
+class Scale
+{
+public:
+    std::string name;
+    Pan leftPan;
+    Pan rightPan;
+
+    Scale();
+    bool isBalenced();
+    unsigned getTotalMass();
+   
+private:
+    unsigned _scaleWeight = 1;
+};
+typedef std::shared_ptr<Scale> ScalePtr;
+
+
 #endif

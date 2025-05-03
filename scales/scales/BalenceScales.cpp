@@ -4,19 +4,20 @@
 
 using namespace std;
 
-std::vector<Scale> BalenceScales::getBalancedScales()
+std::vector<ScalePtr> BalenceScales::getBalancedScales()
 {
-	vector<Scale> retval;
-	// todo return in order
+	vector<ScalePtr> retval;
+
 	for (auto iter = _order.begin(); iter != _order.end(); iter++)
 	{
 		auto found = _scales.find(*iter);
 		if (found == _scales.end())
 		{
-			cerr << "mismtch in scales and order" << endl;
+			cerr << "mismatch in scales and order" << endl;
 			abort();
 		}
 
+		retval.push_back(found->second);
 	}
 
 	return retval;
@@ -33,12 +34,70 @@ void BalenceScales::balence()
 			cerr << "mismtch in scales and order" << endl;
 			abort();
 		}
-		Scale scale = _scales[*r_iter];
+		ScalePtr scale = _scales[*r_iter];
 
-		balanceScale(scale);
+		balenceScale(scale);
 	}
 }
-void BalenceScales::balanceScale(Scale& scale)
-{
 
+void BalenceScales::balenceScale(ScalePtr scale)
+{
+	if (scale->isBalenced())
+	{
+		return;
+	}
+
+	// else it is not balenced
+
+	if (!scale->leftPan.aboveScaleName.empty())
+	{
+		if (!_scales[scale->leftPan.aboveScaleName]->isBalenced())
+		{
+			balenceScale(scale->leftPan.aboveScaleName);
+			unsigned aboveMass = _scales[scale->leftPan.aboveScaleName]->getTotalMass();
+			scale->leftPan.addAboveMass(aboveMass);
+
+		}
+		else if (_scales[scale->leftPan.aboveScaleName]->isBalenced())
+		{
+			// above is balanced
+			unsigned aboveMass = _scales[scale->leftPan.aboveScaleName]->getTotalMass();
+			scale->leftPan.addAboveMass(aboveMass);
+		}
+	}
+
+
+	if (!scale->rightPan.aboveScaleName.empty())
+	{
+		if (!_scales[scale->rightPan.aboveScaleName]->isBalenced())
+		{
+			balenceScale(scale->rightPan.aboveScaleName);
+			// above is now balended
+			unsigned aboveMass = _scales[scale->rightPan.aboveScaleName]->getTotalMass();
+			scale->rightPan.addAboveMass(aboveMass);
+		}
+		else if (_scales[scale->rightPan.aboveScaleName]->isBalenced())
+		{
+			// above is balanced
+			unsigned aboveMass = _scales[scale->rightPan.aboveScaleName]->getTotalMass();
+			scale->rightPan.addAboveMass(aboveMass);
+		}
+	}
+
+	// the pans above are balanced - now balence this scale
+	
+	if (scale->leftPan.getTotalMass() < scale->rightPan.getTotalMass())
+	{
+		scale->leftPan.addMass(scale->rightPan.getTotalMass() - scale->leftPan.getTotalMass());
+	}
+	else if (scale->rightPan.getTotalMass() < scale->leftPan.getTotalMass())
+	{
+		scale->rightPan.addMass(scale->leftPan.getTotalMass() - scale->rightPan.getTotalMass());
+	}
+
+}
+
+void BalenceScales::balenceScale(string& scaleName)
+{
+	balenceScale(_scales[scaleName]);
 }

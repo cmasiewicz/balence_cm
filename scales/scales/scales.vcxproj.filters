@@ -24,6 +24,9 @@
     <ClCompile Include="BalenceScales.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Scale..cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HandleInput.h">

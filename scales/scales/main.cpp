@@ -11,15 +11,20 @@ using namespace std;
 
 int main()
 {
-   /*
-   Example Input
-        #ScaleName, Left, Right
-        B1, 10, B2
-        B2, B3, 4
-        B3, 7, 8
-        */
+    /*
+    Example Input
+         #ScaleName, Left, Right
+         B1, 10, B2
+         B2, B3, 4
+         B3, 7, 8
+         */
     HandleInput input;
     input.handleInput();
     BalenceScales scales(input.getScales(), input.getOrder());
-
+    auto balenced = scales.getBalancedScales();
+    for (auto iter = balenced.begin(); iter != balenced.end(); iter++)
+    {
+        ScalePtr tmp = *iter;
+        cout << tmp->name << "," << tmp->leftPan.getAddedMass() << "," << tmp->rightPan.getAddedMass() << endl;
+    }
 }

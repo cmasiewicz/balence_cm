@@ -9,15 +9,16 @@
 class BalenceScales
 {
 public:
-	BalenceScales(std::unordered_map<std::string, Scale> scales, std::vector<std::string> order):  _scales(scales), _order(order)
+	BalenceScales(std::unordered_map<std::string, ScalePtr> scales, std::vector<std::string> order):  _scales(scales), _order(order)
 	{
 		balence();
 	}
-	std::vector<Scale> getBalancedScales();
+	std::vector<ScalePtr> getBalancedScales();
 private:
 	void balence();
-	void balanceScale(Scale& scale);
-	std::unordered_map<std::string, Scale> _scales;
+	void balenceScale(ScalePtr scale);
+	void balenceScale(std::string& scaleName);
+	std::unordered_map<std::string, ScalePtr> _scales;
 	std::vector<std::string> _order;
 };
 #endif
